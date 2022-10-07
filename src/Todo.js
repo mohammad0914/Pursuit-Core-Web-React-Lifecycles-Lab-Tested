@@ -1,26 +1,27 @@
 import React from "react";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast } from "react-toastify";
 class Todo extends React.Component {
 
-    constructor() {
-
-    }
+    
 
     componentDidMount() {
-        toast.success("");
+        debugger
+        const { text } = this.props;
+       toast.success(`New todo added: ${text}`);
     }
 
     componentWillUnmount() {
-        toast.error("");
-    }
+        const { text } = this.props;
+        toast.error(`Todo deleted: ${text}`);    }
 
     render() {
-        const { Text, Remove } = this.props
+        const { text, Remove } = this.props
         return (
             <div>
-                <input>{Text}</input>
-                <button onClick={Remove()}>--</button>
+                <p>
+                {text}
+                <button onClick={()=>Remove()}>--</button>
+                </p>
             </div>
         );
     }

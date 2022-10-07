@@ -1,5 +1,5 @@
 import React from "react";
-import Todo from Todo.js
+import Todo from "./Todo.js"
 import { toast, ToastContainer } from "react-toastify";
 
 import "../node_modules/react-toastify/dist/ReactToastify.css";
@@ -7,23 +7,24 @@ import "./App.css";
 class App extends React.Component {
 
     constructor() {
+        super()
         this.state = {
             todos: [],
             input: ""
         }
     }
 
-    componentDidUpdate(previousProps, previousState) {
-        const { todos } = this.state;
-        if (todos.length !== previousState.todos.length) {
-            toast(`Remaining todos: ${todos.length}`);
-        }
-    }
+    // componentDidUpdate(previousProps, previousState) {
+    //     const { todos } = this.state;
+    //     if (todos.length !== previousState.todos.length) {
+    //         toast(`Remaining todos: ${todos.length}`);
+    //     }
+    // }
 
     removeToDos = (id) => {
         const { todos } = this.state;
         let newTodos = todos.filter((todo) => {
-            todo.id != id
+           return todo.id !==id
         })
 
         this.setState({
@@ -44,8 +45,10 @@ class App extends React.Component {
     mapTodoComponent = () => {
         const { todos } = this.state
         return todos.map((todo) => {
-            return <Todo Text={todo.Text}
-                Remove={this.removeToDos(todo.id)}
+            return <Todo 
+            key={todo.id}
+            text={todo.text}
+            Remove={()=>this.removeToDos(todo.id)}
             />
         })
     }
@@ -59,7 +62,7 @@ class App extends React.Component {
             <form onSubmit={this.addToDos}>
                 <input onChange={this.handeInput} ></input>
             </form>
-            <div>
+            <div id="todos">
                 {this.mapTodoComponent()}
             </div>
         </>);
